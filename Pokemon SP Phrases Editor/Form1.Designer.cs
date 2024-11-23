@@ -78,7 +78,7 @@
             listBoxStrings.ItemHeight = 15;
             listBoxStrings.Location = new Point(6, 22);
             listBoxStrings.Name = "listBoxStrings";
-            listBoxStrings.Size = new Size(404, 619);
+            listBoxStrings.Size = new Size(404, 394);
             listBoxStrings.TabIndex = 0;
             listBoxStrings.SelectedIndexChanged += listBoxStrings_SelectedIndexChanged;
             // 
