@@ -14,32 +14,9 @@ namespace Pokemon_SP_Phrases_Editor
         public Form1()
         {
             InitializeComponent();
-            InitializeMenu();
             extractedStrings = new List<string>();
         }
 
-        private void InitializeMenu()
-        {
-            var fileMenu = new ToolStripMenuItem("File");
-            fileMenu.DropDownItems.Add("Open", null, OpenFile);
-            fileMenu.DropDownItems.Add("Save", null, SaveFile);
-            fileMenu.DropDownItems.Add("Close", null, CloseFile);
-
-            var editMenu = new ToolStripMenuItem("Edit");
-            editMenu.DropDownItems.Add("Copy", null, CopyText);
-            editMenu.DropDownItems.Add("Select All", null, SelectAllText);
-            editMenu.DropDownItems.Add("Paste", null, PasteText);
-
-            var aboutMenu = new ToolStripMenuItem("About");
-            aboutMenu.Click += AboutMenu_Click;
-
-            var menuStrip = new MenuStrip();
-            menuStrip.Items.Add(fileMenu);
-            menuStrip.Items.Add(editMenu);
-            menuStrip.Items.Add(aboutMenu);
-
-            Controls.Add(menuStrip);
-        }
 
         private void OpenFile(object sender, EventArgs e)
         {
@@ -53,6 +30,7 @@ namespace Pokemon_SP_Phrases_Editor
                         var fileContent = File.ReadAllText(currentFilePath);
                         jsonDocument = JObject.Parse(fileContent);
                         ExtractStrings();
+                        lblFileName.Text = $"File: {Path.GetFileName(currentFilePath)}";
                     }
                     catch (Exception ex)
                     {
@@ -90,7 +68,7 @@ namespace Pokemon_SP_Phrases_Editor
         {
             if (string.IsNullOrEmpty(currentFilePath))
             {
-                MessageBox.Show("No file open.");
+                MessageBox.Show("No File Opened.");
                 return;
             }
             SaveEditedText();
@@ -104,13 +82,14 @@ namespace Pokemon_SP_Phrases_Editor
                 jsonDocument = null;
                 extractedStrings.Clear();
                 listBoxStrings.DataSource = null;
+                lblFileName.Text = "";
             }
         }
 
         private void AboutMenu_Click(object sender, EventArgs e)
         {
             string appName = "Pokemon BDSP Text Editor";
-            string appVersion = "0.1";
+            string appVersion = "1.0.0";
             string buildDate = "2024-11-20";
             string githubUrl = "https://github.com/hawkiq";
             string message = $"{appName}\nVersion: {appVersion}\nBuild Date: {buildDate}\n\nVisit our GitHub project:\n{githubUrl}";
@@ -170,30 +149,55 @@ namespace Pokemon_SP_Phrases_Editor
                 SaveToJson(selectedIndex, newText);
             }
         }
-
         private void SaveToJson(int index, string newText)
         {
-            var jsonString = File.ReadAllText(currentFilePath);
-            JObject json = JObject.Parse(jsonString);
-
-            JArray labelDataArray = (JArray)json["labelDataArray"];
-            foreach (var label in labelDataArray)
+            try
             {
-                JArray wordDataArray = (JArray)label["Array"];
-                foreach (var word in wordDataArray)
+                if (jsonDocument.TryGetValue("labelDataArray", out var labelDataArrayToken))
                 {
-                    if (word["str"] != null)
+                    var labelDataArray = labelDataArrayToken["Array"] as JArray;
+                    if (labelDataArray == null)
                     {
-                        string currentStr = word["str"].ToString();
-                        int currentIndex = extractedStrings.IndexOf(currentStr);
-                        if (currentIndex == index)
+                        MessageBox.Show("Invalid JSON structure: 'labelDataArray.Array' is missing or not an array.");
+                        return;
+                    }
+
+                    int currentIndex = 0;
+
+                    foreach (var label in labelDataArray)
+                    {
+                        var wordDataArray = label["wordDataArray"]?["Array"] as JArray;
+                        if (wordDataArray == null) continue;
+
+                        foreach (var word in wordDataArray)
                         {
-                            word["str"] = newText;
+                            if (word["str"] != null)
+                            {
+
+                                if (currentIndex == index)
+                                {
+                                    word["str"] = newText;
+
+                                    File.WriteAllText(currentFilePath, jsonDocument.ToString(Formatting.Indented));
+                                    return;
+                                }
+
+                                currentIndex++;
+                            }
                         }
                     }
+
+                    MessageBox.Show("Failed to locate the text for saving.", "Save Error");
+                }
+                else
+                {
+                    MessageBox.Show("Invalid JSON structure: 'labelDataArray' is missing.", "Save Error");
                 }
             }
-            File.WriteAllText(currentFilePath, json.ToString());
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error saving to JSON: {ex.Message}", "Save Error");
+            }
         }
 
         private void save_btn_Click(object sender, EventArgs e)
@@ -208,13 +212,179 @@ namespace Pokemon_SP_Phrases_Editor
 
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-    
-            string githubUrl = "https://github.com/hawkiq";
+
+            string githubUrl = "https://osama.app";
             Process.Start(new ProcessStartInfo
             {
                 FileName = githubUrl,
                 UseShellExecute = true
             });
+        }
+
+        private void SaveAsFile(object sender, EventArgs e)
+        {
+            if (extractedStrings == null || extractedStrings.Count == 0)
+            {
+                MessageBox.Show("There is no content to save.", "Save As");
+                return;
+            }
+
+            using (var saveFileDialog = new SaveFileDialog())
+            {
+                saveFileDialog.Filter = "JSON Files|*.json|Text Files|*.txt";
+                saveFileDialog.Title = "Save As";
+                if (saveFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    string selectedPath = saveFileDialog.FileName;
+                    string extension = Path.GetExtension(selectedPath).ToLower();
+
+                    try
+                    {
+                        if (extension == ".json")
+                        {
+                            SaveAsJson(selectedPath);
+                        }
+                        else if (extension == ".txt")
+                        {
+                            SaveAsText(selectedPath);
+                        }
+                        else
+                        {
+                            MessageBox.Show("Unsupported file format.", "Error");
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show($"Error saving file: {ex.Message}", "Error");
+                    }
+                }
+            }
+        }
+
+        private void SaveAsJson(string filePath)
+        {
+            try
+            {
+                if (jsonDocument.TryGetValue("labelDataArray", out var labelDataArrayToken))
+                {
+                    var labelDataArray = labelDataArrayToken["Array"] as JArray;
+                    if (labelDataArray == null)
+                    {
+                        MessageBox.Show("Invalid JSON structure for saving.", "Save As JSON");
+                        return;
+                    }
+
+                    int currentIndex = 0;
+                    foreach (var label in labelDataArray)
+                    {
+                        var wordDataArray = label["wordDataArray"]?["Array"] as JArray;
+                        if (wordDataArray == null) continue;
+
+                        foreach (var word in wordDataArray)
+                        {
+                            if (word["str"] != null && currentIndex < extractedStrings.Count)
+                            {
+                                word["str"] = extractedStrings[currentIndex];
+                                currentIndex++;
+                            }
+                        }
+                    }
+
+                    File.WriteAllText(filePath, jsonDocument.ToString(Formatting.Indented));
+                    MessageBox.Show("File saved as JSON successfully.", "Save As JSON");
+                }
+                else
+                {
+                    MessageBox.Show("Invalid JSON structure: 'labelDataArray' is missing.", "Save As JSON");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error saving JSON: {ex.Message}", "Save As JSON");
+            }
+        }
+
+        private void SaveAsText(string filePath)
+        {
+            try
+            {
+                File.WriteAllLines(filePath, extractedStrings);
+                MessageBox.Show("File saved as TXT successfully.", "Save As TXT");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error saving TXT: {ex.Message}", "Save As TXT");
+            }
+        }
+
+
+        private void openToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            OpenFile(sender, e);
+        }
+
+        private void saveToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SaveFile(sender, e);
+        }
+
+        private void closeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            CloseFile(sender, e);
+        }
+
+        private void selectAllToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SelectAllText(sender, e);
+        }
+
+        private void copyToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            CopyText(sender, e);
+        }
+
+
+        private void pasteToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            PasteText(sender, e);
+        }
+
+        private void exportToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Not Implemented Yet", "Future Function");
+        }
+
+        private void saveAsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SaveAsFile(sender, e);
+        }
+
+        private void label2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void aboutToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            AboutMenu_Click(sender, e);
+        }
+
+        private void githubRepoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            string githubUrl = "https://github.com/hawkiq/Pokemon-BDSP-Phrases-Editor";
+            Process.Start(new ProcessStartInfo
+            {
+                FileName = githubUrl,
+                UseShellExecute = true
+            });
+        }
+
+        private void howtoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            using (var helpDialog = new HelpForm())
+            {
+                helpDialog.ShowDialog(this);
+            }
         }
     }
 }

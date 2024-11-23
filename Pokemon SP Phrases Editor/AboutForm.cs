@@ -38,5 +38,10 @@ namespace Pokemon_SP_Phrases_Editor
         {
             Close();
         }
+
+        private void AboutForm_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

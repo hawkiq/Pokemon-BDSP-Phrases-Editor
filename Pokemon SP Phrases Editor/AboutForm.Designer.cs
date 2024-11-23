@@ -31,13 +31,15 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AboutForm));
             labelAppInfo = new Label();
             linkLabelGitHub = new LinkLabel();
-            buttonClose = new Button();
+            pictureBox1 = new PictureBox();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
             // 
             // labelAppInfo
             // 
             labelAppInfo.AutoSize = true;
-            labelAppInfo.Location = new Point(12, 23);
+            labelAppInfo.ForeColor = SystemColors.Control;
+            labelAppInfo.Location = new Point(12, 18);
             labelAppInfo.Name = "labelAppInfo";
             labelAppInfo.Size = new Size(57, 15);
             labelAppInfo.TabIndex = 0;
@@ -46,7 +48,7 @@
             // linkLabelGitHub
             // 
             linkLabelGitHub.AutoSize = true;
-            linkLabelGitHub.Location = new Point(12, 190);
+            linkLabelGitHub.Location = new Point(9, 220);
             linkLabelGitHub.Name = "linkLabelGitHub";
             linkLabelGitHub.Size = new Size(60, 15);
             linkLabelGitHub.TabIndex = 1;
@@ -54,30 +56,34 @@
             linkLabelGitHub.Text = "linkLabel1";
             linkLabelGitHub.LinkClicked += linkLabelGitHub_LinkClicked;
             // 
-            // buttonClose
+            // pictureBox1
             // 
-            buttonClose.Location = new Point(80, 151);
-            buttonClose.Name = "buttonClose";
-            buttonClose.Size = new Size(59, 26);
-            buttonClose.TabIndex = 2;
-            buttonClose.Text = "Close";
-            buttonClose.UseVisualStyleBackColor = true;
-            buttonClose.Click += buttonClose_Click;
+            pictureBox1.Image = Properties.Resources.logo_osama_ead70dda;
+            pictureBox1.Location = new Point(52, 74);
+            pictureBox1.Name = "pictureBox1";
+            pictureBox1.Size = new Size(100, 111);
+            pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
+            pictureBox1.TabIndex = 3;
+            pictureBox1.TabStop = false;
             // 
             // AboutForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(230, 214);
-            Controls.Add(buttonClose);
+            BackColor = SystemColors.ActiveCaptionText;
+            ClientSize = new Size(207, 245);
+            Controls.Add(pictureBox1);
             Controls.Add(linkLabelGitHub);
             Controls.Add(labelAppInfo);
+            FormBorderStyle = FormBorderStyle.FixedDialog;
             Icon = (Icon)resources.GetObject("$this.Icon");
             MaximizeBox = false;
             MinimizeBox = false;
             Name = "AboutForm";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "About";
+            Load += AboutForm_Load;
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -86,6 +92,6 @@
 
         private Label labelAppInfo;
         private LinkLabel linkLabelGitHub;
-        private Button buttonClose;
+        private PictureBox pictureBox1;
     }
 }
