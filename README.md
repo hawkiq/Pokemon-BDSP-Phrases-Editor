@@ -1,0 +1,1 @@
+# Pokemon SP Phrases Editor
