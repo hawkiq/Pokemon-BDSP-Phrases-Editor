@@ -89,11 +89,10 @@ namespace Pokemon_SP_Phrases_Editor
         private void AboutMenu_Click(object sender, EventArgs e)
         {
             string appName = "Pokemon BDSP Text Editor";
-            string appVersion = "1.0.0";
-            string buildDate = "2024-11-20";
+            string appVersion = "1.0.1";
+            string buildDate = "2024-11-24";
             string githubUrl = "https://github.com/hawkiq";
             string message = $"{appName}\nVersion: {appVersion}\nBuild Date: {buildDate}\n\nVisit our GitHub project:\n{githubUrl}";
-            string title = "About";
             using (var aboutForm = new AboutForm(appName, appVersion, buildDate, githubUrl))
             {
                 aboutForm.ShowDialog(this);

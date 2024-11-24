@@ -262,7 +262,7 @@
             // 
             selectAllToolStripMenuItem.Name = "selectAllToolStripMenuItem";
             selectAllToolStripMenuItem.ShortcutKeys = Keys.Control | Keys.A;
-            selectAllToolStripMenuItem.Size = new Size(180, 22);
+            selectAllToolStripMenuItem.Size = new Size(164, 22);
             selectAllToolStripMenuItem.Text = "Select All";
             selectAllToolStripMenuItem.Click += selectAllToolStripMenuItem_Click;
             // 
@@ -270,7 +270,7 @@
             // 
             copyToolStripMenuItem.Name = "copyToolStripMenuItem";
             copyToolStripMenuItem.ShortcutKeys = Keys.Control | Keys.C;
-            copyToolStripMenuItem.Size = new Size(180, 22);
+            copyToolStripMenuItem.Size = new Size(164, 22);
             copyToolStripMenuItem.Text = "Copy";
             copyToolStripMenuItem.Click += copyToolStripMenuItem_Click;
             // 
@@ -278,14 +278,14 @@
             // 
             cutToolStripMenuItem.Name = "cutToolStripMenuItem";
             cutToolStripMenuItem.ShortcutKeys = Keys.Control | Keys.X;
-            cutToolStripMenuItem.Size = new Size(180, 22);
+            cutToolStripMenuItem.Size = new Size(164, 22);
             cutToolStripMenuItem.Text = "Cut";
             // 
             // pasteToolStripMenuItem
             // 
             pasteToolStripMenuItem.Name = "pasteToolStripMenuItem";
             pasteToolStripMenuItem.ShortcutKeys = Keys.Control | Keys.V;
-            pasteToolStripMenuItem.Size = new Size(180, 22);
+            pasteToolStripMenuItem.Size = new Size(164, 22);
             pasteToolStripMenuItem.Text = "Paste";
             pasteToolStripMenuItem.Click += pasteToolStripMenuItem_Click;
             // 
@@ -300,7 +300,7 @@
             // 
             exportToolStripMenuItem.Name = "exportToolStripMenuItem";
             exportToolStripMenuItem.ShortcutKeys = Keys.Control | Keys.T;
-            exportToolStripMenuItem.Size = new Size(180, 22);
+            exportToolStripMenuItem.Size = new Size(148, 22);
             exportToolStripMenuItem.Text = "Export";
             exportToolStripMenuItem.Click += exportToolStripMenuItem_Click;
             // 
@@ -314,7 +314,7 @@
             // howtoToolStripMenuItem
             // 
             howtoToolStripMenuItem.Name = "howtoToolStripMenuItem";
-            howtoToolStripMenuItem.Size = new Size(180, 22);
+            howtoToolStripMenuItem.Size = new Size(140, 22);
             howtoToolStripMenuItem.Text = "How-to...";
             howtoToolStripMenuItem.ToolTipText = "How to Use Program";
             howtoToolStripMenuItem.Click += howtoToolStripMenuItem_Click;
@@ -322,14 +322,14 @@
             // aboutToolStripMenuItem1
             // 
             aboutToolStripMenuItem1.Name = "aboutToolStripMenuItem1";
-            aboutToolStripMenuItem1.Size = new Size(180, 22);
+            aboutToolStripMenuItem1.Size = new Size(140, 22);
             aboutToolStripMenuItem1.Text = "About";
             aboutToolStripMenuItem1.Click += aboutToolStripMenuItem1_Click;
             // 
             // githubRepoToolStripMenuItem
             // 
             githubRepoToolStripMenuItem.Name = "githubRepoToolStripMenuItem";
-            githubRepoToolStripMenuItem.Size = new Size(180, 22);
+            githubRepoToolStripMenuItem.Size = new Size(140, 22);
             githubRepoToolStripMenuItem.Text = "Github Repo";
             githubRepoToolStripMenuItem.Click += githubRepoToolStripMenuItem_Click;
             // 
@@ -340,7 +340,7 @@
             label2.Name = "label2";
             label2.Size = new Size(78, 15);
             label2.TabIndex = 6;
-            label2.Text = "Version : 1.0.0";
+            label2.Text = "Version : 1.0.1";
             label2.Click += label2_Click;
             // 
             // Form1
