@@ -89,8 +89,8 @@ namespace Pokemon_SP_Phrases_Editor
         private void AboutMenu_Click(object sender, EventArgs e)
         {
             string appName = "Pokemon BDSP Text Editor";
-            string appVersion = "1.0.1";
-            string buildDate = "2024-11-24";
+            string appVersion = "1.0.2";
+            string buildDate = "2024-11-27";
             string githubUrl = "https://github.com/hawkiq";
             string message = $"{appName}\nVersion: {appVersion}\nBuild Date: {buildDate}\n\nVisit our GitHub project:\n{githubUrl}";
             using (var aboutForm = new AboutForm(appName, appVersion, buildDate, githubUrl))
@@ -114,11 +114,34 @@ namespace Pokemon_SP_Phrases_Editor
             textBoxEdit.Paste();
         }
 
+        private void ListBoxStrings_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Up || e.KeyCode == Keys.Down)
+            {
+                int newIndex = listBoxStrings.SelectedIndex;
+                if (e.KeyCode == Keys.Up && newIndex > 0)
+                {
+                    newIndex--;
+                }
+                else if (e.KeyCode == Keys.Down && newIndex < listBoxStrings.Items.Count - 1)
+                {
+                    newIndex++;
+                }
+
+                listBoxStrings.SelectedIndex = newIndex;
+                listBoxStrings.TopIndex = listBoxStrings.SelectedIndex;
+                e.Handled = true;
+            }
+        }
+
+
         private void listBoxStrings_SelectedIndexChanged(object sender, EventArgs e)
         {
             var selectedString = listBoxStrings.SelectedItem as string;
             textBoxEdit.Text = selectedString ?? string.Empty;
             textBoxEdit_old.Text = selectedString ?? string.Empty;
+            textBoxEdit.Focus();
+            textBoxEdit.SelectAll();
         }
 
 
@@ -144,7 +167,8 @@ namespace Pokemon_SP_Phrases_Editor
 
                 listBoxStrings.DataSource = null;
                 listBoxStrings.DataSource = new BindingSource(extractedStrings, null);
-
+                listBoxStrings.SelectedIndex = selectedIndex;
+                listBoxStrings.TopIndex = listBoxStrings.SelectedIndex;
                 SaveToJson(selectedIndex, newText);
             }
         }

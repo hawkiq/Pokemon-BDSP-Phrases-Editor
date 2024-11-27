@@ -1,4 +1,5 @@
-﻿namespace Pokemon_SP_Phrases_Editor
+﻿
+namespace Pokemon_SP_Phrases_Editor
 {
     partial class Form1
     {
@@ -110,6 +111,7 @@
             listBoxStrings.Size = new Size(404, 394);
             listBoxStrings.TabIndex = 0;
             listBoxStrings.SelectedIndexChanged += listBoxStrings_SelectedIndexChanged;
+            listBoxStrings.KeyDown += ListBoxStrings_KeyDown;
             // 
             // groupBox2
             // 
@@ -340,7 +342,7 @@
             label2.Name = "label2";
             label2.Size = new Size(78, 15);
             label2.TabIndex = 6;
-            label2.Text = "Version : 1.0.1";
+            label2.Text = "Version : 1.0.2";
             label2.Click += label2_Click;
             // 
             // Form1
