@@ -15,6 +15,12 @@ namespace Pokemon_SP_Phrases_Editor
         {
             InitializeComponent();
             extractedStrings = new List<string>();
+
+            this.DragEnter += new DragEventHandler(OnDragEnter);
+            this.DragDrop += new DragEventHandler(OnDragDrop);
+
+            listBoxStrings.DragEnter += new DragEventHandler(OnDragEnter);
+            listBoxStrings.DragDrop += new DragEventHandler(OnDragDrop);
         }
 
 
@@ -36,6 +42,56 @@ namespace Pokemon_SP_Phrases_Editor
                     {
                         MessageBox.Show($"Error opening file: {ex.Message}");
                     }
+                }
+            }
+        }
+
+        private void OnDragEnter(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent(DataFormats.FileDrop))
+            {
+                var files = (string[])e.Data.GetData(DataFormats.FileDrop);
+                if (files.Length > 0 && Path.GetExtension(files[0]).ToLower() == ".json")
+                {
+                    e.Effect = DragDropEffects.Copy; 
+                }
+                else
+                {
+                    e.Effect = DragDropEffects.None;
+                }
+            }
+            else
+            {
+                e.Effect = DragDropEffects.None;
+            }
+        }
+
+ 
+        private void OnDragDrop(object sender, DragEventArgs e)
+        {
+            var files = (string[])e.Data.GetData(DataFormats.FileDrop);
+
+            if (files.Length > 0)
+            {
+                var filePath = files[0];
+                if (Path.GetExtension(filePath).ToLower() == ".json")
+                {
+                    try
+                    {
+                        currentFilePath = filePath;
+                        var fileContent = File.ReadAllText(currentFilePath);
+                        jsonDocument = JObject.Parse(fileContent);
+                        ExtractStrings();
+                        lblFileName.Text = $"File: {Path.GetFileName(currentFilePath)}";
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show($"Error opening file: {ex.Message}");
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Invalid file type. Please drop a JSON file.", "Invalid File");
                 }
             }
         }
@@ -89,8 +145,8 @@ namespace Pokemon_SP_Phrases_Editor
         private void AboutMenu_Click(object sender, EventArgs e)
         {
             string appName = "Pokemon BDSP Text Editor";
-            string appVersion = "1.0.2";
-            string buildDate = "2024-11-27";
+            string appVersion = "1.0.3";
+            string buildDate = "2024-11-28";
             string githubUrl = "https://github.com/hawkiq";
             string message = $"{appName}\nVersion: {appVersion}\nBuild Date: {buildDate}\n\nVisit our GitHub project:\n{githubUrl}";
             using (var aboutForm = new AboutForm(appName, appVersion, buildDate, githubUrl))
@@ -101,7 +157,15 @@ namespace Pokemon_SP_Phrases_Editor
 
         private void CopyText(object sender, EventArgs e)
         {
-            Clipboard.SetText(textBoxEdit.Text);
+            if (textBoxEdit.Text != "")
+                Clipboard.SetText(textBoxEdit.Text);
+        }
+
+        private void CutText(object sender, EventArgs e)
+        {
+            if (textBoxEdit.Text != "")
+                Clipboard.SetText(textBoxEdit.Text);
+                textBoxEdit.Text = string.Empty;
         }
 
         private void SelectAllText(object sender, EventArgs e)
@@ -133,8 +197,6 @@ namespace Pokemon_SP_Phrases_Editor
                 e.Handled = true;
             }
         }
-
-
         private void listBoxStrings_SelectedIndexChanged(object sender, EventArgs e)
         {
             var selectedString = listBoxStrings.SelectedItem as string;
@@ -142,6 +204,46 @@ namespace Pokemon_SP_Phrases_Editor
             textBoxEdit_old.Text = selectedString ?? string.Empty;
             textBoxEdit.Focus();
             textBoxEdit.SelectAll();
+
+            if (jsonDocument != null && selectedString != null)
+            {
+                if (jsonDocument.TryGetValue("labelDataArray", out var labelDataArray))
+                {
+                    foreach (var label in labelDataArray)
+                    {
+                        if (label is JObject labelObject)
+                        {
+                            if (labelObject.TryGetValue("wordDataArray", out var wordDataArray))
+                            {
+                                foreach (var word in wordDataArray["Array"])
+                                {
+                                    var str = word["str"]?.ToString();
+                                    if (str != null && str.Equals(selectedString))
+                                    {
+                                        var combinedString = string.Empty;
+
+                                        foreach (var relatedWord in wordDataArray["Array"])
+                                        {
+                                            var relatedStr = relatedWord["str"]?.ToString();
+                                            if (!string.IsNullOrEmpty(relatedStr))
+                                            {
+                                                combinedString += relatedStr + " ";
+                                            }
+                                        }
+
+                                        textBoxEdit_old.Text = combinedString.Trim();
+                                        return;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            else
+            {
+                textBoxEdit_old.Text = string.Empty;
+            }
         }
 
 
@@ -366,6 +468,10 @@ namespace Pokemon_SP_Phrases_Editor
             CopyText(sender, e);
         }
 
+        private void cutToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            CutText(sender, e);
+        }
 
         private void pasteToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -409,5 +515,6 @@ namespace Pokemon_SP_Phrases_Editor
                 helpDialog.ShowDialog(this);
             }
         }
+
     }
 }

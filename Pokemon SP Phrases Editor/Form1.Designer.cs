@@ -93,9 +93,9 @@ namespace Pokemon_SP_Phrases_Editor
             // 
             pictureBox1.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             pictureBox1.Image = Properties.Resources.brilliant_diamond_shining_pearl_169_en;
-            pictureBox1.Location = new Point(427, 228);
+            pictureBox1.Location = new Point(427, 261);
             pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(436, 196);
+            pictureBox1.Size = new Size(436, 163);
             pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox1.TabIndex = 5;
             pictureBox1.TabStop = false;
@@ -122,7 +122,7 @@ namespace Pokemon_SP_Phrases_Editor
             groupBox2.Controls.Add(textBoxEdit);
             groupBox2.Location = new Point(427, 22);
             groupBox2.Name = "groupBox2";
-            groupBox2.Size = new Size(448, 200);
+            groupBox2.Size = new Size(448, 233);
             groupBox2.TabIndex = 2;
             groupBox2.TabStop = false;
             groupBox2.Text = "Text to Edit";
@@ -132,25 +132,26 @@ namespace Pokemon_SP_Phrases_Editor
             groupBox3.Controls.Add(textBoxEdit_old);
             groupBox3.Location = new Point(6, 61);
             groupBox3.Name = "groupBox3";
-            groupBox3.Size = new Size(424, 52);
+            groupBox3.Size = new Size(424, 114);
             groupBox3.TabIndex = 4;
             groupBox3.TabStop = false;
             groupBox3.Text = "Original Phrase";
             // 
             // textBoxEdit_old
             // 
-            textBoxEdit_old.Location = new Point(6, 21);
+            textBoxEdit_old.Location = new Point(6, 22);
+            textBoxEdit_old.Multiline = true;
             textBoxEdit_old.Name = "textBoxEdit_old";
             textBoxEdit_old.ReadOnly = true;
-            textBoxEdit_old.Size = new Size(412, 23);
+            textBoxEdit_old.Size = new Size(412, 86);
             textBoxEdit_old.TabIndex = 0;
             // 
             // clr_btn
             // 
             clr_btn.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            clr_btn.Location = new Point(136, 171);
+            clr_btn.Location = new Point(304, 198);
             clr_btn.Name = "clr_btn";
-            clr_btn.Size = new Size(168, 23);
+            clr_btn.Size = new Size(109, 23);
             clr_btn.TabIndex = 3;
             clr_btn.Text = "Clear Text";
             clr_btn.UseVisualStyleBackColor = true;
@@ -164,7 +165,7 @@ namespace Pokemon_SP_Phrases_Editor
             save_btn.FlatAppearance.MouseDownBackColor = Color.FromArgb(192, 192, 255);
             save_btn.FlatStyle = FlatStyle.Flat;
             save_btn.Font = new Font("Segoe UI", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            save_btn.Location = new Point(92, 119);
+            save_btn.Location = new Point(12, 181);
             save_btn.Name = "save_btn";
             save_btn.Size = new Size(264, 46);
             save_btn.TabIndex = 2;
@@ -174,6 +175,7 @@ namespace Pokemon_SP_Phrases_Editor
             // 
             // textBoxEdit
             // 
+            textBoxEdit.AcceptsReturn = true;
             textBoxEdit.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             textBoxEdit.Location = new Point(6, 22);
             textBoxEdit.Name = "textBoxEdit";
@@ -282,6 +284,7 @@ namespace Pokemon_SP_Phrases_Editor
             cutToolStripMenuItem.ShortcutKeys = Keys.Control | Keys.X;
             cutToolStripMenuItem.Size = new Size(164, 22);
             cutToolStripMenuItem.Text = "Cut";
+            cutToolStripMenuItem.Click += cutToolStripMenuItem_Click;
             // 
             // pasteToolStripMenuItem
             // 
@@ -342,7 +345,7 @@ namespace Pokemon_SP_Phrases_Editor
             label2.Name = "label2";
             label2.Size = new Size(78, 15);
             label2.TabIndex = 6;
-            label2.Text = "Version : 1.0.2";
+            label2.Text = "Version : 1.0.3";
             label2.Click += label2_Click;
             // 
             // Form1
