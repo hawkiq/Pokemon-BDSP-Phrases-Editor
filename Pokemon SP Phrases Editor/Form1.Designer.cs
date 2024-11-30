@@ -37,6 +37,7 @@ namespace Pokemon_SP_Phrases_Editor
             groupBox2 = new GroupBox();
             btn_selectAll = new Button();
             groupBox3 = new GroupBox();
+            lblToastMessage = new Label();
             btn_copy_origin = new Button();
             textBoxEdit_old = new TextBox();
             clr_btn = new Button();
@@ -142,6 +143,7 @@ namespace Pokemon_SP_Phrases_Editor
             // 
             // groupBox3
             // 
+            groupBox3.Controls.Add(lblToastMessage);
             groupBox3.Controls.Add(btn_copy_origin);
             groupBox3.Controls.Add(textBoxEdit_old);
             groupBox3.Location = new Point(6, 61);
@@ -151,8 +153,20 @@ namespace Pokemon_SP_Phrases_Editor
             groupBox3.TabStop = false;
             groupBox3.Text = "Original Phrase";
             // 
+            // lblToastMessage
+            // 
+            lblToastMessage.BackColor = Color.LightGray;
+            lblToastMessage.Location = new Point(6, 22);
+            lblToastMessage.Name = "lblToastMessage";
+            lblToastMessage.Size = new Size(390, 85);
+            lblToastMessage.TabIndex = 7;
+            lblToastMessage.Text = "Text Has Been Copied";
+            lblToastMessage.TextAlign = ContentAlignment.MiddleCenter;
+            lblToastMessage.Visible = false;
+            // 
             // btn_copy_origin
             // 
+            btn_copy_origin.Cursor = Cursors.Hand;
             btn_copy_origin.Image = Properties.Resources.copy_files;
             btn_copy_origin.Location = new Point(419, 22);
             btn_copy_origin.Name = "btn_copy_origin";
@@ -428,5 +442,6 @@ namespace Pokemon_SP_Phrases_Editor
         private Button btn_copy_origin;
         private Button btn_selectAll;
         private ToolStripMenuItem exitToolStripMenuItem;
+        private Label lblToastMessage;
     }
 }

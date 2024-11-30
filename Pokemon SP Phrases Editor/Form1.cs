@@ -534,12 +534,31 @@ namespace Pokemon_SP_Phrases_Editor
 
         private void btn_copy_origin_Click(object sender, EventArgs e)
         {
-            Clipboard.SetText(textBoxEdit_old.Text);
+            if (textBoxEdit_old.Text != "")
+            {
+                Clipboard.SetText(textBoxEdit_old.Text);
+                ShowToastMessage("Text copied to clipboard!");
+            }
         }
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void ShowToastMessage(string message)
+        {
+            lblToastMessage.Text = message;
+            lblToastMessage.Visible = true;
+
+            System.Windows.Forms.Timer toastTimer = new System.Windows.Forms.Timer();
+            toastTimer.Interval = 2000;
+            toastTimer.Tick += (sender, e) =>
+            {
+                lblToastMessage.Visible = false;
+                toastTimer.Stop();
+            };
+            toastTimer.Start();
         }
     }
 }
