@@ -36,6 +36,7 @@ namespace Pokemon_SP_Phrases_Editor
             listBoxStrings = new ListBox();
             groupBox2 = new GroupBox();
             groupBox3 = new GroupBox();
+            btn_copy_origin = new Button();
             textBoxEdit_old = new TextBox();
             clr_btn = new Button();
             save_btn = new Button();
@@ -129,6 +130,7 @@ namespace Pokemon_SP_Phrases_Editor
             // 
             // groupBox3
             // 
+            groupBox3.Controls.Add(btn_copy_origin);
             groupBox3.Controls.Add(textBoxEdit_old);
             groupBox3.Location = new Point(6, 61);
             groupBox3.Name = "groupBox3";
@@ -137,6 +139,16 @@ namespace Pokemon_SP_Phrases_Editor
             groupBox3.TabStop = false;
             groupBox3.Text = "Original Phrase";
             // 
+            // btn_copy_origin
+            // 
+            btn_copy_origin.Location = new Point(390, 22);
+            btn_copy_origin.Name = "btn_copy_origin";
+            btn_copy_origin.Size = new Size(28, 85);
+            btn_copy_origin.TabIndex = 1;
+            btn_copy_origin.Text = "COPY";
+            btn_copy_origin.UseVisualStyleBackColor = true;
+            btn_copy_origin.Click += btn_copy_origin_Click;
+            // 
             // textBoxEdit_old
             // 
             textBoxEdit_old.Location = new Point(6, 22);
@@ -144,15 +156,15 @@ namespace Pokemon_SP_Phrases_Editor
             textBoxEdit_old.Name = "textBoxEdit_old";
             textBoxEdit_old.ReadOnly = true;
             textBoxEdit_old.ScrollBars = ScrollBars.Vertical;
-            textBoxEdit_old.Size = new Size(412, 86);
+            textBoxEdit_old.Size = new Size(378, 86);
             textBoxEdit_old.TabIndex = 0;
             // 
             // clr_btn
             // 
             clr_btn.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            clr_btn.Location = new Point(304, 198);
+            clr_btn.Location = new Point(384, 22);
             clr_btn.Name = "clr_btn";
-            clr_btn.Size = new Size(109, 23);
+            clr_btn.Size = new Size(52, 27);
             clr_btn.TabIndex = 3;
             clr_btn.Text = "Clear Text";
             clr_btn.UseVisualStyleBackColor = true;
@@ -168,7 +180,7 @@ namespace Pokemon_SP_Phrases_Editor
             save_btn.Font = new Font("Segoe UI", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
             save_btn.Location = new Point(12, 181);
             save_btn.Name = "save_btn";
-            save_btn.Size = new Size(264, 46);
+            save_btn.Size = new Size(412, 46);
             save_btn.TabIndex = 2;
             save_btn.Text = "Save (Ctrl+S)";
             save_btn.UseVisualStyleBackColor = true;
@@ -182,7 +194,7 @@ namespace Pokemon_SP_Phrases_Editor
             textBoxEdit.Name = "textBoxEdit";
             textBoxEdit.PlaceholderText = "Write the Text you want to replace here";
             textBoxEdit.RightToLeft = RightToLeft.Yes;
-            textBoxEdit.Size = new Size(424, 27);
+            textBoxEdit.Size = new Size(372, 27);
             textBoxEdit.TabIndex = 1;
             textBoxEdit.TextAlign = HorizontalAlignment.Right;
             // 
@@ -364,7 +376,7 @@ namespace Pokemon_SP_Phrases_Editor
             MainMenuStrip = menuStrip1;
             MaximizeBox = false;
             Name = "Form1";
-            Text = "Pokemon BDSP Text Editor - Helper Tool By : OsaMa hawkiq";
+            Text = "Pokemon BDSP Phrases Editor - Helper Tool";
             groupBox1.ResumeLayout(false);
             groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
@@ -409,5 +421,6 @@ namespace Pokemon_SP_Phrases_Editor
         private ToolStripMenuItem howtoToolStripMenuItem;
         private ToolStripMenuItem aboutToolStripMenuItem1;
         private ToolStripMenuItem githubRepoToolStripMenuItem;
+        private Button btn_copy_origin;
     }
 }

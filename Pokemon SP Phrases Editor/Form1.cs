@@ -56,7 +56,7 @@ namespace Pokemon_SP_Phrases_Editor
                 var files = (string[])e.Data.GetData(DataFormats.FileDrop);
                 if (files.Length > 0 && Path.GetExtension(files[0]).ToLower() == ".json")
                 {
-                    e.Effect = DragDropEffects.Copy; 
+                    e.Effect = DragDropEffects.Copy;
                 }
                 else
                 {
@@ -69,7 +69,7 @@ namespace Pokemon_SP_Phrases_Editor
             }
         }
 
- 
+
         private void OnDragDrop(object sender, DragEventArgs e)
         {
             var files = (string[])e.Data.GetData(DataFormats.FileDrop);
@@ -160,7 +160,7 @@ namespace Pokemon_SP_Phrases_Editor
 
         private void AboutMenu_Click(object sender, EventArgs e)
         {
-            string appName = "Pokemon BDSP Text Editor";
+            string appName = "Pokemon BDSP Phrases Editor";
             string appVersion = GetApplicationVersion();
             string buildDate = "2024-11-30";
             string githubUrl = "https://github.com/hawkiq";
@@ -181,7 +181,7 @@ namespace Pokemon_SP_Phrases_Editor
         {
             if (textBoxEdit.Text != "")
                 Clipboard.SetText(textBoxEdit.Text);
-                textBoxEdit.Text = string.Empty;
+            textBoxEdit.Text = string.Empty;
         }
 
         private void SelectAllText(object sender, EventArgs e)
@@ -526,5 +526,9 @@ namespace Pokemon_SP_Phrases_Editor
             }
         }
 
+        private void btn_copy_origin_Click(object sender, EventArgs e)
+        {
+            Clipboard.SetText(textBoxEdit_old.Text);
+        }
     }
 }
