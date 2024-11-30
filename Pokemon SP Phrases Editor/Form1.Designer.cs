@@ -62,6 +62,7 @@ namespace Pokemon_SP_Phrases_Editor
             aboutToolStripMenuItem1 = new ToolStripMenuItem();
             githubRepoToolStripMenuItem = new ToolStripMenuItem();
             lblversion = new Label();
+            lblRowInfo = new Label();
             groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             groupBox2.SuspendLayout();
@@ -72,6 +73,7 @@ namespace Pokemon_SP_Phrases_Editor
             // groupBox1
             // 
             groupBox1.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            groupBox1.Controls.Add(lblRowInfo);
             groupBox1.Controls.Add(lblFileName);
             groupBox1.Controls.Add(pictureBox1);
             groupBox1.Controls.Add(listBoxStrings);
@@ -381,6 +383,15 @@ namespace Pokemon_SP_Phrases_Editor
             lblversion.Text = "Version : 1.0.4";
             lblversion.Click += label2_Click;
             // 
+            // lblRowInfo
+            // 
+            lblRowInfo.AutoSize = true;
+            lblRowInfo.Location = new Point(12, 418);
+            lblRowInfo.Name = "lblRowInfo";
+            lblRowInfo.Size = new Size(24, 15);
+            lblRowInfo.TabIndex = 7;
+            lblRowInfo.Text = "0/0";
+            // 
             // Form1
             // 
             AllowDrop = true;
@@ -443,5 +454,6 @@ namespace Pokemon_SP_Phrases_Editor
         private Button btn_selectAll;
         private ToolStripMenuItem exitToolStripMenuItem;
         private Label lblToastMessage;
+        private Label lblRowInfo;
     }
 }

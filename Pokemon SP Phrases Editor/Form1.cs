@@ -215,6 +215,7 @@ namespace Pokemon_SP_Phrases_Editor
         }
         private void listBoxStrings_SelectedIndexChanged(object sender, EventArgs e)
         {
+            UpdateRowInfo();
             var selectedString = listBoxStrings.SelectedItem as string;
             textBoxEdit.Text = selectedString ?? string.Empty;
             textBoxEdit.Focus();
@@ -255,6 +256,20 @@ namespace Pokemon_SP_Phrases_Editor
             textBoxEdit_old.Text = string.Empty;
         }
 
+        private void UpdateRowInfo()
+        {
+            if (listBoxStrings.Items.Count == 0)
+            {
+                lblRowInfo.Text = "0 / 0";
+                return;
+            }
+
+            int currentRow = listBoxStrings.SelectedIndex + 1;
+
+            int totalRows = listBoxStrings.Items.Count;
+
+            lblRowInfo.Text = $"{currentRow} / {totalRows}";
+        }
 
 
         private void textBoxEdit_KeyDown(object sender, KeyEventArgs e)
