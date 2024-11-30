@@ -345,6 +345,12 @@ namespace Pokemon_SP_Phrases_Editor
             textBoxEdit.Text = null; textBoxEdit.Focus();
         }
 
+        private void btn_selectAll_Click(object sender, EventArgs e)
+        {
+            textBoxEdit.Focus();
+            SelectAllText(sender, e);
+        }
+
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
 
@@ -529,6 +535,11 @@ namespace Pokemon_SP_Phrases_Editor
         private void btn_copy_origin_Click(object sender, EventArgs e)
         {
             Clipboard.SetText(textBoxEdit_old.Text);
+        }
+
+        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
     }
 }

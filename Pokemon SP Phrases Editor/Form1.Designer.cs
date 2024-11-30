@@ -35,6 +35,7 @@ namespace Pokemon_SP_Phrases_Editor
             pictureBox1 = new PictureBox();
             listBoxStrings = new ListBox();
             groupBox2 = new GroupBox();
+            btn_selectAll = new Button();
             groupBox3 = new GroupBox();
             btn_copy_origin = new Button();
             textBoxEdit_old = new TextBox();
@@ -49,13 +50,12 @@ namespace Pokemon_SP_Phrases_Editor
             saveToolStripMenuItem = new ToolStripMenuItem();
             saveAsToolStripMenuItem = new ToolStripMenuItem();
             closeToolStripMenuItem = new ToolStripMenuItem();
+            exitToolStripMenuItem = new ToolStripMenuItem();
             editToolStripMenuItem = new ToolStripMenuItem();
             selectAllToolStripMenuItem = new ToolStripMenuItem();
             copyToolStripMenuItem = new ToolStripMenuItem();
             cutToolStripMenuItem = new ToolStripMenuItem();
             pasteToolStripMenuItem = new ToolStripMenuItem();
-            toolsToolStripMenuItem = new ToolStripMenuItem();
-            exportToolStripMenuItem = new ToolStripMenuItem();
             helpToolStripMenuItem = new ToolStripMenuItem();
             howtoToolStripMenuItem = new ToolStripMenuItem();
             aboutToolStripMenuItem1 = new ToolStripMenuItem();
@@ -77,7 +77,7 @@ namespace Pokemon_SP_Phrases_Editor
             groupBox1.Controls.Add(groupBox2);
             groupBox1.Location = new Point(0, 27);
             groupBox1.Name = "groupBox1";
-            groupBox1.Size = new Size(863, 430);
+            groupBox1.Size = new Size(875, 430);
             groupBox1.TabIndex = 1;
             groupBox1.TabStop = false;
             groupBox1.Text = "JSON file Phrases";
@@ -94,9 +94,9 @@ namespace Pokemon_SP_Phrases_Editor
             // 
             pictureBox1.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             pictureBox1.Image = Properties.Resources.brilliant_diamond_shining_pearl_169_en;
-            pictureBox1.Location = new Point(427, 261);
+            pictureBox1.Location = new Point(416, 261);
             pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(436, 163);
+            pictureBox1.Size = new Size(459, 163);
             pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox1.TabIndex = 5;
             pictureBox1.TabStop = false;
@@ -117,16 +117,28 @@ namespace Pokemon_SP_Phrases_Editor
             // groupBox2
             // 
             groupBox2.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            groupBox2.Controls.Add(btn_selectAll);
             groupBox2.Controls.Add(groupBox3);
             groupBox2.Controls.Add(clr_btn);
             groupBox2.Controls.Add(save_btn);
             groupBox2.Controls.Add(textBoxEdit);
-            groupBox2.Location = new Point(427, 22);
+            groupBox2.Location = new Point(416, 22);
             groupBox2.Name = "groupBox2";
-            groupBox2.Size = new Size(448, 233);
+            groupBox2.Size = new Size(471, 233);
             groupBox2.TabIndex = 2;
             groupBox2.TabStop = false;
             groupBox2.Text = "Text to Edit";
+            // 
+            // btn_selectAll
+            // 
+            btn_selectAll.Cursor = Cursors.Hand;
+            btn_selectAll.Image = Properties.Resources.selection;
+            btn_selectAll.Location = new Point(408, 22);
+            btn_selectAll.Name = "btn_selectAll";
+            btn_selectAll.Size = new Size(26, 28);
+            btn_selectAll.TabIndex = 5;
+            btn_selectAll.UseVisualStyleBackColor = true;
+            btn_selectAll.Click += btn_selectAll_Click;
             // 
             // groupBox3
             // 
@@ -134,18 +146,18 @@ namespace Pokemon_SP_Phrases_Editor
             groupBox3.Controls.Add(textBoxEdit_old);
             groupBox3.Location = new Point(6, 61);
             groupBox3.Name = "groupBox3";
-            groupBox3.Size = new Size(424, 114);
+            groupBox3.Size = new Size(453, 114);
             groupBox3.TabIndex = 4;
             groupBox3.TabStop = false;
             groupBox3.Text = "Original Phrase";
             // 
             // btn_copy_origin
             // 
-            btn_copy_origin.Location = new Point(390, 22);
+            btn_copy_origin.Image = Properties.Resources.copy_files;
+            btn_copy_origin.Location = new Point(419, 22);
             btn_copy_origin.Name = "btn_copy_origin";
             btn_copy_origin.Size = new Size(28, 85);
             btn_copy_origin.TabIndex = 1;
-            btn_copy_origin.Text = "COPY";
             btn_copy_origin.UseVisualStyleBackColor = true;
             btn_copy_origin.Click += btn_copy_origin_Click;
             // 
@@ -156,17 +168,18 @@ namespace Pokemon_SP_Phrases_Editor
             textBoxEdit_old.Name = "textBoxEdit_old";
             textBoxEdit_old.ReadOnly = true;
             textBoxEdit_old.ScrollBars = ScrollBars.Vertical;
-            textBoxEdit_old.Size = new Size(378, 86);
+            textBoxEdit_old.Size = new Size(407, 86);
             textBoxEdit_old.TabIndex = 0;
             // 
             // clr_btn
             // 
             clr_btn.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            clr_btn.Location = new Point(384, 22);
+            clr_btn.Cursor = Cursors.Hand;
+            clr_btn.Image = Properties.Resources.eraser;
+            clr_btn.Location = new Point(436, 22);
             clr_btn.Name = "clr_btn";
-            clr_btn.Size = new Size(52, 27);
+            clr_btn.Size = new Size(23, 28);
             clr_btn.TabIndex = 3;
-            clr_btn.Text = "Clear Text";
             clr_btn.UseVisualStyleBackColor = true;
             clr_btn.Click += clr_btn_Click;
             // 
@@ -180,7 +193,7 @@ namespace Pokemon_SP_Phrases_Editor
             save_btn.Font = new Font("Segoe UI", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
             save_btn.Location = new Point(12, 181);
             save_btn.Name = "save_btn";
-            save_btn.Size = new Size(412, 46);
+            save_btn.Size = new Size(435, 46);
             save_btn.TabIndex = 2;
             save_btn.Text = "Save (Ctrl+S)";
             save_btn.UseVisualStyleBackColor = true;
@@ -194,7 +207,7 @@ namespace Pokemon_SP_Phrases_Editor
             textBoxEdit.Name = "textBoxEdit";
             textBoxEdit.PlaceholderText = "Write the Text you want to replace here";
             textBoxEdit.RightToLeft = RightToLeft.Yes;
-            textBoxEdit.Size = new Size(372, 27);
+            textBoxEdit.Size = new Size(396, 27);
             textBoxEdit.TabIndex = 1;
             textBoxEdit.TextAlign = HorizontalAlignment.Right;
             // 
@@ -202,7 +215,7 @@ namespace Pokemon_SP_Phrases_Editor
             // 
             label1.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             label1.AutoSize = true;
-            label1.Location = new Point(674, 460);
+            label1.Location = new Point(686, 460);
             label1.Name = "label1";
             label1.Size = new Size(109, 15);
             label1.TabIndex = 4;
@@ -212,7 +225,7 @@ namespace Pokemon_SP_Phrases_Editor
             // 
             linkLabel1.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             linkLabel1.AutoSize = true;
-            linkLabel1.Location = new Point(789, 460);
+            linkLabel1.Location = new Point(801, 460);
             linkLabel1.Name = "linkLabel1";
             linkLabel1.Size = new Size(68, 15);
             linkLabel1.TabIndex = 3;
@@ -222,16 +235,16 @@ namespace Pokemon_SP_Phrases_Editor
             // 
             // menuStrip1
             // 
-            menuStrip1.Items.AddRange(new ToolStripItem[] { fileToolStripMenuItem, editToolStripMenuItem, toolsToolStripMenuItem, helpToolStripMenuItem });
+            menuStrip1.Items.AddRange(new ToolStripItem[] { fileToolStripMenuItem, editToolStripMenuItem, helpToolStripMenuItem });
             menuStrip1.Location = new Point(0, 0);
             menuStrip1.Name = "menuStrip1";
-            menuStrip1.Size = new Size(875, 24);
+            menuStrip1.Size = new Size(887, 24);
             menuStrip1.TabIndex = 5;
             menuStrip1.Text = "menuStrip1";
             // 
             // fileToolStripMenuItem
             // 
-            fileToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { openToolStripMenuItem, saveToolStripMenuItem, saveAsToolStripMenuItem, closeToolStripMenuItem });
+            fileToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { openToolStripMenuItem, saveToolStripMenuItem, saveAsToolStripMenuItem, closeToolStripMenuItem, exitToolStripMenuItem });
             fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             fileToolStripMenuItem.Size = new Size(37, 20);
             fileToolStripMenuItem.Text = "File";
@@ -265,8 +278,16 @@ namespace Pokemon_SP_Phrases_Editor
             closeToolStripMenuItem.Name = "closeToolStripMenuItem";
             closeToolStripMenuItem.ShortcutKeys = Keys.Control | Keys.Q;
             closeToolStripMenuItem.Size = new Size(186, 22);
-            closeToolStripMenuItem.Text = "Close";
+            closeToolStripMenuItem.Text = "Close File";
             closeToolStripMenuItem.Click += closeToolStripMenuItem_Click;
+            // 
+            // exitToolStripMenuItem
+            // 
+            exitToolStripMenuItem.Name = "exitToolStripMenuItem";
+            exitToolStripMenuItem.ShortcutKeys = Keys.Alt | Keys.F4;
+            exitToolStripMenuItem.Size = new Size(186, 22);
+            exitToolStripMenuItem.Text = "Exit";
+            exitToolStripMenuItem.Click += exitToolStripMenuItem_Click;
             // 
             // editToolStripMenuItem
             // 
@@ -306,21 +327,6 @@ namespace Pokemon_SP_Phrases_Editor
             pasteToolStripMenuItem.Size = new Size(164, 22);
             pasteToolStripMenuItem.Text = "Paste";
             pasteToolStripMenuItem.Click += pasteToolStripMenuItem_Click;
-            // 
-            // toolsToolStripMenuItem
-            // 
-            toolsToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { exportToolStripMenuItem });
-            toolsToolStripMenuItem.Name = "toolsToolStripMenuItem";
-            toolsToolStripMenuItem.Size = new Size(46, 20);
-            toolsToolStripMenuItem.Text = "Tools";
-            // 
-            // exportToolStripMenuItem
-            // 
-            exportToolStripMenuItem.Name = "exportToolStripMenuItem";
-            exportToolStripMenuItem.ShortcutKeys = Keys.Control | Keys.T;
-            exportToolStripMenuItem.Size = new Size(148, 22);
-            exportToolStripMenuItem.Text = "Export";
-            exportToolStripMenuItem.Click += exportToolStripMenuItem_Click;
             // 
             // helpToolStripMenuItem
             // 
@@ -366,7 +372,7 @@ namespace Pokemon_SP_Phrases_Editor
             AllowDrop = true;
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(875, 481);
+            ClientSize = new Size(887, 481);
             Controls.Add(lblversion);
             Controls.Add(linkLabel1);
             Controls.Add(label1);
@@ -412,8 +418,6 @@ namespace Pokemon_SP_Phrases_Editor
         private ToolStripMenuItem copyToolStripMenuItem;
         private ToolStripMenuItem cutToolStripMenuItem;
         private ToolStripMenuItem pasteToolStripMenuItem;
-        private ToolStripMenuItem toolsToolStripMenuItem;
-        private ToolStripMenuItem exportToolStripMenuItem;
         private ToolStripMenuItem saveAsToolStripMenuItem;
         private Label lblFileName;
         private Label lblversion;
@@ -422,5 +426,7 @@ namespace Pokemon_SP_Phrases_Editor
         private ToolStripMenuItem aboutToolStripMenuItem1;
         private ToolStripMenuItem githubRepoToolStripMenuItem;
         private Button btn_copy_origin;
+        private Button btn_selectAll;
+        private ToolStripMenuItem exitToolStripMenuItem;
     }
 }
