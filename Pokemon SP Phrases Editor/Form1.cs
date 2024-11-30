@@ -3,6 +3,8 @@ using System.Diagnostics;
 using System.Text.Json;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using System.Reflection;
+using System.Diagnostics;
 
 namespace Pokemon_SP_Phrases_Editor
 {
@@ -21,6 +23,7 @@ namespace Pokemon_SP_Phrases_Editor
 
             listBoxStrings.DragEnter += new DragEventHandler(OnDragEnter);
             listBoxStrings.DragDrop += new DragEventHandler(OnDragDrop);
+            lblversion.Text = $"Version: {GetApplicationVersion()}";
         }
 
 
@@ -120,6 +123,19 @@ namespace Pokemon_SP_Phrases_Editor
             listBoxStrings.DataSource = new BindingSource(extractedStrings, null);
         }
 
+        private string GetApplicationVersion()
+        {
+            var assembly = Assembly.GetExecutingAssembly();
+            var informationalVersion = assembly
+                .GetCustomAttribute<AssemblyInformationalVersionAttribute>()?.InformationalVersion;
+            if (informationalVersion != null && informationalVersion.Contains("+"))
+            {
+                informationalVersion = informationalVersion.Split('+')[0];
+            }
+
+            return informationalVersion ?? "Unknown Version";
+        }
+
         private void SaveFile(object sender, EventArgs e)
         {
             if (string.IsNullOrEmpty(currentFilePath))
@@ -145,8 +161,8 @@ namespace Pokemon_SP_Phrases_Editor
         private void AboutMenu_Click(object sender, EventArgs e)
         {
             string appName = "Pokemon BDSP Text Editor";
-            string appVersion = "1.0.3";
-            string buildDate = "2024-11-28";
+            string appVersion = GetApplicationVersion();
+            string buildDate = "2024-11-30";
             string githubUrl = "https://github.com/hawkiq";
             string message = $"{appName}\nVersion: {appVersion}\nBuild Date: {buildDate}\n\nVisit our GitHub project:\n{githubUrl}";
             using (var aboutForm = new AboutForm(appName, appVersion, buildDate, githubUrl))
@@ -201,7 +217,6 @@ namespace Pokemon_SP_Phrases_Editor
         {
             var selectedString = listBoxStrings.SelectedItem as string;
             textBoxEdit.Text = selectedString ?? string.Empty;
-            textBoxEdit_old.Text = selectedString ?? string.Empty;
             textBoxEdit.Focus();
             textBoxEdit.SelectAll();
 
@@ -209,42 +224,37 @@ namespace Pokemon_SP_Phrases_Editor
             {
                 if (jsonDocument.TryGetValue("labelDataArray", out var labelDataArray))
                 {
-                    foreach (var label in labelDataArray)
+                    foreach (var label in labelDataArray["Array"])
                     {
-                        if (label is JObject labelObject)
+                        if (label["wordDataArray"] != null)
                         {
-                            if (labelObject.TryGetValue("wordDataArray", out var wordDataArray))
+                            foreach (var word in label["wordDataArray"]["Array"])
                             {
-                                foreach (var word in wordDataArray["Array"])
+                                var str = word["str"]?.ToString();
+                                if (str != null && str.Equals(selectedString))
                                 {
-                                    var str = word["str"]?.ToString();
-                                    if (str != null && str.Equals(selectedString))
+                                    var combinedStrings = string.Empty;
+                                    foreach (var relatedWord in label["wordDataArray"]["Array"])
                                     {
-                                        var combinedString = string.Empty;
-
-                                        foreach (var relatedWord in wordDataArray["Array"])
+                                        var relatedStr = relatedWord["str"]?.ToString();
+                                        if (!string.IsNullOrEmpty(relatedStr))
                                         {
-                                            var relatedStr = relatedWord["str"]?.ToString();
-                                            if (!string.IsNullOrEmpty(relatedStr))
-                                            {
-                                                combinedString += relatedStr + " ";
-                                            }
+                                            combinedStrings += relatedStr + Environment.NewLine;
                                         }
-
-                                        textBoxEdit_old.Text = combinedString.Trim();
-                                        return;
                                     }
+
+                                    textBoxEdit_old.Text = combinedStrings.Trim();
+                                    return;
                                 }
                             }
                         }
                     }
                 }
             }
-            else
-            {
-                textBoxEdit_old.Text = string.Empty;
-            }
+
+            textBoxEdit_old.Text = string.Empty;
         }
+
 
 
         private void textBoxEdit_KeyDown(object sender, KeyEventArgs e)

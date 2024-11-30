@@ -59,7 +59,7 @@ namespace Pokemon_SP_Phrases_Editor
             howtoToolStripMenuItem = new ToolStripMenuItem();
             aboutToolStripMenuItem1 = new ToolStripMenuItem();
             githubRepoToolStripMenuItem = new ToolStripMenuItem();
-            label2 = new Label();
+            lblversion = new Label();
             groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             groupBox2.SuspendLayout();
@@ -143,6 +143,7 @@ namespace Pokemon_SP_Phrases_Editor
             textBoxEdit_old.Multiline = true;
             textBoxEdit_old.Name = "textBoxEdit_old";
             textBoxEdit_old.ReadOnly = true;
+            textBoxEdit_old.ScrollBars = ScrollBars.Vertical;
             textBoxEdit_old.Size = new Size(412, 86);
             textBoxEdit_old.TabIndex = 0;
             // 
@@ -338,15 +339,15 @@ namespace Pokemon_SP_Phrases_Editor
             githubRepoToolStripMenuItem.Text = "Github Repo";
             githubRepoToolStripMenuItem.Click += githubRepoToolStripMenuItem_Click;
             // 
-            // label2
+            // lblversion
             // 
-            label2.AutoSize = true;
-            label2.Location = new Point(12, 460);
-            label2.Name = "label2";
-            label2.Size = new Size(78, 15);
-            label2.TabIndex = 6;
-            label2.Text = "Version : 1.0.3";
-            label2.Click += label2_Click;
+            lblversion.AutoSize = true;
+            lblversion.Location = new Point(12, 460);
+            lblversion.Name = "lblversion";
+            lblversion.Size = new Size(78, 15);
+            lblversion.TabIndex = 6;
+            lblversion.Text = "Version : 1.0.4";
+            lblversion.Click += label2_Click;
             // 
             // Form1
             // 
@@ -354,7 +355,7 @@ namespace Pokemon_SP_Phrases_Editor
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(875, 481);
-            Controls.Add(label2);
+            Controls.Add(lblversion);
             Controls.Add(linkLabel1);
             Controls.Add(label1);
             Controls.Add(groupBox1);
@@ -403,7 +404,7 @@ namespace Pokemon_SP_Phrases_Editor
         private ToolStripMenuItem exportToolStripMenuItem;
         private ToolStripMenuItem saveAsToolStripMenuItem;
         private Label lblFileName;
-        private Label label2;
+        private Label lblversion;
         private ToolStripMenuItem helpToolStripMenuItem;
         private ToolStripMenuItem howtoToolStripMenuItem;
         private ToolStripMenuItem aboutToolStripMenuItem1;
