@@ -5,6 +5,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.Reflection;
 using System.Diagnostics;
+using System.Text;
 
 namespace Pokemon_SP_Phrases_Editor
 {
@@ -464,7 +465,32 @@ namespace Pokemon_SP_Phrases_Editor
         {
             try
             {
-                File.WriteAllLines(filePath, extractedStrings);
+                using (StreamWriter writer = new StreamWriter(filePath, false, Encoding.UTF8))
+                {
+                    if (jsonDocument.TryGetValue("labelDataArray", out var labelDataArray))
+                    {
+                        foreach (var label in labelDataArray["Array"])
+                        {
+                            if (label["wordDataArray"] != null)
+                            {
+                                var combinedStrings = string.Empty;
+                                foreach (var word in label["wordDataArray"]["Array"])
+                                {
+                                    var str = word["str"]?.ToString();
+                                    if (!string.IsNullOrEmpty(str))
+                                    {
+                                        combinedStrings += str + Environment.NewLine;
+                                    }
+                                }
+                                if (!string.IsNullOrEmpty(combinedStrings))
+                                {
+                                    writer.WriteLine(combinedStrings.Trim());
+                                    writer.WriteLine("____________");
+                                }
+                            }
+                        }
+                    }
+                }
                 MessageBox.Show("File saved as TXT successfully.", "Save As TXT");
             }
             catch (Exception ex)
