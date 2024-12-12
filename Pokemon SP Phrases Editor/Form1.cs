@@ -44,6 +44,8 @@ namespace Pokemon_SP_Phrases_Editor
                         jsonDocument = JObject.Parse(fileContent);
                         ExtractStrings();
                         lblFileName.Text = $"File: {Path.GetFileName(currentFilePath)}";
+                        UpdateRecentFiles(currentFilePath);
+                        PopulateRecentFilesMenu(recentToolStripMenuItem);
                     }
                     catch (Exception ex)
                     {
@@ -658,7 +660,95 @@ namespace Pokemon_SP_Phrases_Editor
                 bool.TryParse(config.AppSettings.Settings["chk_dbl"].Value, out bool isChecked);
                 chk_dbl.Checked = isChecked;
             }
+            PopulateRecentFilesMenu(recentToolStripMenuItem);
         }
 
+        private void SaveRecentFiles(List<string> recentFiles)
+        {
+            string serializedFiles = string.Join(";", recentFiles);
+            SaveSetting("RecentFiles", serializedFiles);
+        }
+
+        private List<string> LoadRecentFiles()
+        {
+            var config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+            if (config.AppSettings.Settings["RecentFiles"] != null)
+            {
+                string serializedFiles = config.AppSettings.Settings["RecentFiles"].Value;
+                return serializedFiles.Split(';').Where(f => !string.IsNullOrWhiteSpace(f)).ToList();
+            }
+            return new List<string>();
+        }
+
+        private List<string> UpdateRecentFiles(string filePath)
+        {
+            List<string> recentFiles = LoadRecentFiles();
+            if (recentFiles.Contains(filePath))
+            {
+                recentFiles.Remove(filePath); 
+            }
+            recentFiles.Insert(0, filePath); 
+            if (recentFiles.Count > 6)
+            {
+                recentFiles = recentFiles.Take(6).ToList();
+            }
+            SaveRecentFiles(recentFiles);
+            return recentFiles;
+        }
+
+        private void PopulateRecentFilesMenu(ToolStripMenuItem recentMenuItem)
+        {
+            recentMenuItem.DropDownItems.Clear();
+            List<string> recentFiles = LoadRecentFiles();
+            if (recentFiles.Count == 0)
+            {
+                recentMenuItem.Enabled = false; 
+                recentMenuItem.ForeColor = Color.Gray;
+                return;
+            }
+            recentMenuItem.Enabled = true; 
+            recentMenuItem.ForeColor = SystemColors.ControlText;
+
+            foreach (string file in recentFiles)
+            {
+                ToolStripMenuItem fileItem = new ToolStripMenuItem(file);
+                fileItem.Click += (s, e) => OpenRecentFile(file);
+                recentMenuItem.DropDownItems.Add(fileItem);
+            }
+            recentToolStripMenuItem.DropDownItems.Add(new ToolStripSeparator());
+
+            ToolStripMenuItem clearRecentFilesItem = new ToolStripMenuItem("Clear Recent Files");
+            clearRecentFilesItem.Click += clearRecentFilesToolStripMenuItem_Click;
+            recentToolStripMenuItem.DropDownItems.Add(clearRecentFilesItem);
+
+            recentToolStripMenuItem.Enabled = true;
+        }
+
+        private void OpenRecentFile(string filePath)
+        {
+            
+                try
+                {
+                    var fileContent = File.ReadAllText(filePath);
+                    jsonDocument = JObject.Parse(fileContent);
+                    ExtractStrings();
+                    lblFileName.Text = $"File: {Path.GetFileName(filePath)}";
+                    UpdateRecentFiles(filePath);
+                    PopulateRecentFilesMenu(recentToolStripMenuItem);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Error opening file: {ex.Message}");
+                }
+            
+            UpdateRecentFiles(filePath);
+            PopulateRecentFilesMenu(recentToolStripMenuItem);
+        }
+
+        private void clearRecentFilesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SaveRecentFiles(new List<string>());
+            PopulateRecentFilesMenu(recentToolStripMenuItem);
+        }
     }
 }

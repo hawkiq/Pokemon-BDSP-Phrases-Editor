@@ -48,6 +48,8 @@ namespace Pokemon_SP_Phrases_Editor
             linkLabel1 = new LinkLabel();
             menuStrip1 = new MenuStrip();
             fileToolStripMenuItem = new ToolStripMenuItem();
+            recentToolStripMenuItem = new ToolStripMenuItem();
+            clearRecentFilesToolStripMenuItem = new ToolStripMenuItem();
             openToolStripMenuItem = new ToolStripMenuItem();
             saveToolStripMenuItem = new ToolStripMenuItem();
             saveAsToolStripMenuItem = new ToolStripMenuItem();
@@ -271,10 +273,23 @@ namespace Pokemon_SP_Phrases_Editor
             // 
             // fileToolStripMenuItem
             // 
-            fileToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { openToolStripMenuItem, saveToolStripMenuItem, saveAsToolStripMenuItem, closeToolStripMenuItem, exitToolStripMenuItem });
+            fileToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { recentToolStripMenuItem, openToolStripMenuItem, saveToolStripMenuItem, saveAsToolStripMenuItem, closeToolStripMenuItem, exitToolStripMenuItem });
             fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             fileToolStripMenuItem.Size = new Size(37, 20);
             fileToolStripMenuItem.Text = "File";
+            // 
+            // recentToolStripMenuItem
+            // 
+            recentToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { clearRecentFilesToolStripMenuItem });
+            recentToolStripMenuItem.Name = "recentToolStripMenuItem";
+            recentToolStripMenuItem.Size = new Size(186, 22);
+            recentToolStripMenuItem.Text = "Recent Files";
+            // 
+            // clearRecentFilesToolStripMenuItem
+            // 
+            clearRecentFilesToolStripMenuItem.Name = "clearRecentFilesToolStripMenuItem";
+            clearRecentFilesToolStripMenuItem.Size = new Size(180, 22);
+            clearRecentFilesToolStripMenuItem.Text = "Clear Recent Files";
             // 
             // openToolStripMenuItem
             // 
@@ -470,5 +485,7 @@ namespace Pokemon_SP_Phrases_Editor
         private Label lblToastMessage;
         private Label lblRowInfo;
         private CheckBox chk_dbl;
+        private ToolStripMenuItem recentToolStripMenuItem;
+        private ToolStripMenuItem clearRecentFilesToolStripMenuItem;
     }
 }
