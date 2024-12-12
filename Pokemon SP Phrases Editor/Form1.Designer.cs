@@ -31,6 +31,7 @@ namespace Pokemon_SP_Phrases_Editor
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             groupBox1 = new GroupBox();
+            lblRowInfo = new Label();
             lblFileName = new Label();
             pictureBox1 = new PictureBox();
             listBoxStrings = new ListBox();
@@ -62,7 +63,7 @@ namespace Pokemon_SP_Phrases_Editor
             aboutToolStripMenuItem1 = new ToolStripMenuItem();
             githubRepoToolStripMenuItem = new ToolStripMenuItem();
             lblversion = new Label();
-            lblRowInfo = new Label();
+            chk_dbl = new CheckBox();
             groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             groupBox2.SuspendLayout();
@@ -84,6 +85,15 @@ namespace Pokemon_SP_Phrases_Editor
             groupBox1.TabIndex = 1;
             groupBox1.TabStop = false;
             groupBox1.Text = "JSON file Phrases";
+            // 
+            // lblRowInfo
+            // 
+            lblRowInfo.AutoSize = true;
+            lblRowInfo.Location = new Point(12, 418);
+            lblRowInfo.Name = "lblRowInfo";
+            lblRowInfo.Size = new Size(24, 15);
+            lblRowInfo.TabIndex = 7;
+            lblRowInfo.Text = "0/0";
             // 
             // lblFileName
             // 
@@ -116,6 +126,7 @@ namespace Pokemon_SP_Phrases_Editor
             listBoxStrings.TabIndex = 0;
             listBoxStrings.SelectedIndexChanged += listBoxStrings_SelectedIndexChanged;
             listBoxStrings.KeyDown += ListBoxStrings_KeyDown;
+            listBoxStrings.MouseDoubleClick += listBoxStrings_MouseDoubleClick;
             // 
             // groupBox2
             // 
@@ -383,14 +394,16 @@ namespace Pokemon_SP_Phrases_Editor
             lblversion.Text = "Version : 1.0.4";
             lblversion.Click += label2_Click;
             // 
-            // lblRowInfo
+            // chk_dbl
             // 
-            lblRowInfo.AutoSize = true;
-            lblRowInfo.Location = new Point(12, 418);
-            lblRowInfo.Name = "lblRowInfo";
-            lblRowInfo.Size = new Size(24, 15);
-            lblRowInfo.TabIndex = 7;
-            lblRowInfo.Text = "0/0";
+            chk_dbl.AutoSize = true;
+            chk_dbl.Location = new Point(140, 459);
+            chk_dbl.Name = "chk_dbl";
+            chk_dbl.Size = new Size(207, 19);
+            chk_dbl.TabIndex = 8;
+            chk_dbl.Text = "Paste Text on Double click on Item";
+            chk_dbl.UseVisualStyleBackColor = true;
+            chk_dbl.CheckedChanged += chk_dbl_CheckedChanged;
             // 
             // Form1
             // 
@@ -398,6 +411,7 @@ namespace Pokemon_SP_Phrases_Editor
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(887, 481);
+            Controls.Add(chk_dbl);
             Controls.Add(lblversion);
             Controls.Add(linkLabel1);
             Controls.Add(label1);
@@ -455,5 +469,6 @@ namespace Pokemon_SP_Phrases_Editor
         private ToolStripMenuItem exitToolStripMenuItem;
         private Label lblToastMessage;
         private Label lblRowInfo;
+        private CheckBox chk_dbl;
     }
 }

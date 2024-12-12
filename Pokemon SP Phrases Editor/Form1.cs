@@ -6,6 +6,8 @@ using Newtonsoft.Json.Linq;
 using System.Reflection;
 using System.Diagnostics;
 using System.Text;
+using System.Configuration;
+using System.Windows.Forms;
 
 namespace Pokemon_SP_Phrases_Editor
 {
@@ -25,6 +27,7 @@ namespace Pokemon_SP_Phrases_Editor
             listBoxStrings.DragEnter += new DragEventHandler(OnDragEnter);
             listBoxStrings.DragDrop += new DragEventHandler(OnDragDrop);
             lblversion.Text = $"Version: {GetApplicationVersion()}";
+            LoadSettings();
         }
 
 
@@ -163,7 +166,7 @@ namespace Pokemon_SP_Phrases_Editor
         {
             string appName = "Pokemon BDSP Phrases Editor";
             string appVersion = GetApplicationVersion();
-            string buildDate = "2024-11-30";
+            string buildDate = "2024-12-12";
             string githubUrl = "https://github.com/hawkiq";
             string message = $"{appName}\nVersion: {appVersion}\nBuild Date: {buildDate}\n\nVisit our GitHub project:\n{githubUrl}";
             using (var aboutForm = new AboutForm(appName, appVersion, buildDate, githubUrl))
@@ -601,5 +604,61 @@ namespace Pokemon_SP_Phrases_Editor
             };
             toastTimer.Start();
         }
+
+        private void listBoxStrings_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            if (!chk_dbl.Checked)
+            {
+                return;
+            }
+
+
+            if (listBoxStrings.SelectedItem != null)
+            {
+                if (Clipboard.ContainsText())
+                {
+                    textBoxEdit.Text = Clipboard.GetText();
+
+                    textBoxEdit.Focus();
+                    textBoxEdit.SelectAll();
+                }
+                else
+                {
+                    MessageBox.Show("Clipboard is empty or does not contain text.", "Paste Error");
+                }
+            }
+        }
+
+        private void chk_dbl_CheckedChanged(object sender, EventArgs e)
+        {
+            SaveSetting("chk_dbl", chk_dbl.Checked.ToString());
+        }
+
+        private void SaveSetting(string key, string value)
+        {
+            var config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+            if (config.AppSettings.Settings[key] != null)
+            {
+                config.AppSettings.Settings[key].Value = value;
+            }
+            else
+            {
+                config.AppSettings.Settings.Add(key, value);
+            }
+            config.Save(ConfigurationSaveMode.Modified);
+            ConfigurationManager.RefreshSection("appSettings");
+            
+        }
+
+        private void LoadSettings()
+        {
+            var config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+            if (config.AppSettings.Settings["chk_dbl"] != null)
+            {
+                bool.TryParse(config.AppSettings.Settings["chk_dbl"].Value, out bool isChecked);
+                chk_dbl.Checked = isChecked;
+            }
+        }
+
     }
 }

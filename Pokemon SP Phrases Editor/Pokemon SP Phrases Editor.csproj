@@ -10,14 +10,14 @@
     <ApplicationIcon>pokemon.ico</ApplicationIcon>
     <Authors>OsaMa Soft</Authors>
     <AssemblyName>Pokemon BDSP Phrases Editor</AssemblyName>
-    <AssemblyVersion>1.0.0.5</AssemblyVersion>
+    <AssemblyVersion>1.0.0.6</AssemblyVersion>
     <Copyright>OsaMa Software 2024</Copyright>
     <PackageProjectUrl>https://github.com/hawkiq/Pokemon-BDSP-Phrases-Editor</PackageProjectUrl>
     <PackageIcon>pokemon.png</PackageIcon>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <RepositoryUrl>https://github.com/hawkiq/Pokemon-BDSP-Phrases-Editor</RepositoryUrl>
-    <FileVersion>1.0.0.5</FileVersion>
-    <Version>1.0.5</Version>
+    <FileVersion>1.0.0.6</FileVersion>
+    <Version>1.0.6</Version>
   </PropertyGroup>
 
   <ItemGroup>
